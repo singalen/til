@@ -6,6 +6,7 @@ import select
 
 """
 Rewriting https://gist.github.com/kazuho/10436253 in Python out of curiosity
+Doesn't work in 'accept' mode, so I'm not sure I got the program right.
 """
 
 if __name__ == '__main__':
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     listener.bind(('', 12345))
 
     if mode == 'select-accept':
-        # FIXME: How do we test if it succeeded?
+        # FIXME: How do we test if it succeeded in Python? Check the library source.
         listener.setblocking(1)
         # or die "failed to set listening socket to non-blocking mode:$!";
 
@@ -29,8 +30,6 @@ if __name__ == '__main__':
 
     while True:
         if mode == 'select-accept':
-            rfds = bytearray(255)
-            rfds[listener.fileno()] = 1
             if select.select([listener.fileno()], [], [])[0]:
                 break
         conn = listener.accept()
