@@ -1,0 +1,15 @@
+http://www.gelato.unsw.edu.au/archives/git/0506/5511.html
+
+Linus Torwalds' "coolest git merge ever".
+
+per http://stackoverflow.com/a/1684435/207791: 
+* it appears in the Git repository as if it had always been developed as part of Git,
+* all the history is kept intact and
+* it can still be developed independently in its old repository, with changes simply being git pulled.
+
+	git fetch <project-to-union-merge>
+	GIT_INDEX_FILE=.git/tmp-index git-read-tree FETCH_HEAD
+	GIT_INDEX_FILE=.git/tmp-index git-checkout-cache -a -u
+	git-update-cache --add -- (GIT_INDEX_FILE=.git/tmp-index git-ls-files)
+	cp .git/FETCH_HEAD .git/MERGE_HEAD
+	git commit
